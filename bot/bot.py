@@ -220,8 +220,9 @@ def get_repl_logs(update: Update, context):
     client.connect(hostname=host, username=username, password=password, port=port)
 
     #Грепаем логи репликации в /var/log/postgresql/postgresql-15-main.log
-    #stdin, stdout, stderr = client.exec_command('grep "repl_user" /var/log/postgresql/postgresql-15-main.log | tail -n 5')
-    #data = stdout.read() + stderr.read()
+    stdin, stdout, stderr = client.exec_command('grep "repl_user" /var/log/postgresql/postgresql-15-main.log | tail -n 5')
+    data = stdout.read() + stderr.read()
+    update.message.reply_text(str(data, encoding="utf-8"))
 
     #Получаем список логов
     stdin, stdout, stderr = client.exec_command('ls /home/pt/docker/logs')
